@@ -1,0 +1,31 @@
+#!/bin/sh
+
+download_xml() {
+    if [ -f "/tmp/speedtest_urls.xml" ]; then
+        echo "speedtest xml alreay exist!"
+        return
+    fi
+
+    /usr/bin/prepare_speedtest_xml
+
+    if [ -f "/tmp/speedtest_urls.xml" ]; then
+        echo "speedtest xml download successed!"
+        return
+    fi
+
+    return
+}
+
+sleep_download_xml() {
+    sleep 30
+    download_xml
+
+    return
+}
+
+if [ "$1" == "download_xml" ]; then
+    download_xml
+elif [ "$1" == "sleep_download_xml" ]; then
+    sleep_download_xml
+fi
+

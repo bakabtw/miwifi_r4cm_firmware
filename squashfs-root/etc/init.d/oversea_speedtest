@@ -1,0 +1,36 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+
+EXTRA_COMMANDS=" start stop"
+EXTRA_HELP="
+            start                                           Start service
+            stop                                            Stop service
+            -------------------------------------------------"
+
+#0,ok; non-0, Nok
+start() {
+    #check NETMODE 1stly
+    local mode
+    mode=`uci get xiaoqiang.common.NETMODE 2>/dev/null`
+    if [ "$mode" == "wifiapmode" -o "$mode" == "lanapmode" ]; then
+        echo "In AP mode, disable auto speed test. exit!"
+        return 0
+    fi
+
+    #check config file
+    mode=`uci get ab.settings.enabled 2>/dev/null`
+    if [ $mode -eq "0" ]; then
+        echo "ab config enabled not setted, exit!"
+        return 0
+    fi
+
+    /usr/bin/oversea_download_xml sleep_download_xml &
+    return 0
+}
+
+
+stop(){
+    return 0
+}
+

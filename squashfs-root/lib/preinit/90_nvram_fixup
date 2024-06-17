@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# Some batches of products are manufactured according to an
+# inaccurate product specification, in which bdata ColorType
+# holds color code instead of color.
+# Translate ColorType to color if color is not availble.
+nvram_colortype() {
+	[ -z "$(nvram get color)" ] && {
+		colortype=$(nvram get ColorType)
+		[ -n "$colortype" ] && {
+			nvram set color="$colortype"
+		}
+	}
+}
+
+nvram_loss_recovery() {
+	[ -f /tmp/need_nvram_recovery ] || return 0
+	rm -f /tmp/need_nvram_recovery
+	if [ -s /etc/config/nvram.txt ]
+	then
+		echo "nvram loss recovery nvram corrupt">> /dev/kmsg 2>/dev/null
+		cat /etc/config/nvram.txt | while read line
+		do
+			nvram set "$line"
+		done
+	fi
+	nvram set restore_defaults=0
+	nvram commit
+}
+
+miwifi_nvram_fixup() {
+	nvram_colortype
+	nvram_loss_recovery
+}
+
+boot_hook_add preinit_main miwifi_nvram_fixup
