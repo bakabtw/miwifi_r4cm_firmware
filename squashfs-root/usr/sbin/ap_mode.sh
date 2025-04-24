@@ -395,7 +395,6 @@ case $OPT in
     close)
         bridgeap_check_gw_stop
         bridgeap_close;
-        [ -f /usr/sbin/mi_iptv.sh ] && /usr/sbin/mi_iptv.sh iptv_close_lanap
         /etc/init.d/network restart
         /etc/init.d/dnsmasq enable
         /etc/init.d/dnsmasq restart

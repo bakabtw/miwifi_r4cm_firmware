@@ -108,7 +108,7 @@ local hardware = string.lower( XQSysUtil.getHardware() )
 <div class="form-item" {if($encryption == "none")} style="display:none;"{/if}>
     <label class="k"><%:密码%></label>
     <span class="v">
-        <input type="password" data-type="password" name="pwd" value="{$password}" class="ipt-text" autocomplete="off" datatype="wifipassword" minLength="8" maxLength="63" reqMsg="<%:Wi-Fi密码%>" />
+        <input style="box-sizing:border-box;padding-right:105px;width:410px;height:40px;" type="password" data-type="password" name="pwd" value="{$password}" class="ipt-text" autocomplete="off" datatype="wifipassword" minLength="8" maxLength="63" reqMsg="<%:Wi-Fi密码%>" />
     </span>
     <em class="t"></em>
 </div>
@@ -423,9 +423,9 @@ local hardware = string.lower( XQSysUtil.getHardware() )
 
         $('body').delegate('input[name=ssid]' ,'blur', function(e){
             var tar = e.currentTarget;
-            // if ( escape(tar.value).indexOf("%u") >= 0 ) {
-            //     $(tar.parentNode).next('.t').text('<%:此SSID会导致某些设备支持不佳%>').show();
-            // }
+            if ( escape(tar.value).indexOf("%u") >= 0 ) {
+                $(tar.parentNode).next('.t').text('<%:此SSID会导致某些设备支持不佳%>').show();
+            }
         });
 
         function onControlFocus() {

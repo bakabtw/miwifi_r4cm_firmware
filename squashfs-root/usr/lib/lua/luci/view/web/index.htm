@@ -233,6 +233,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
+                                <a id="btnSpeedTest" href="#" class="btn btn-primary btn-m"><span id="retestSpeed"><%:重新测速%></span></a>
                                 <a id="btnBandset" href="#" class="btn btn-dft btn-m"><span id="manualSetting"><%:手工设置%></span></a>
                             </td>
                         </tr>
@@ -772,7 +773,7 @@ $.sub('status:get', function(){
             'D01': '<%:小米路由器D01%>'
         };
 
-        $('#routermodel').text(mapModel[data.platform]);
+        $('#routermodel').text(mapModel[data.platform] + '('+ data.platform +')');
         $('#routerversion').text('MiWiFi ' + mapChannel[data.channel] + ' ' + data.version);
         $('#routermac').text(data.mac);
         $('#routersn').text(data.sn);

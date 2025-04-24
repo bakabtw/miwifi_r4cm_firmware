@@ -115,7 +115,7 @@ $('#uploadFormBtn').click(function(){
 	ext = $.trim(ext);
 	var validExt = ext == 'bin' || ext == 'BIN';
 	if (!validExt) {
-		err.html('文件格式错误，请重新选择...').show();
+		err.html('文件格式错误，请重新选择').show();
 		item.addClass('item-err');
 		return false;
 	}

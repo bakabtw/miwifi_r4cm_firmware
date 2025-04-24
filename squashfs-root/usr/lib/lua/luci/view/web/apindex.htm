@@ -17,6 +17,7 @@
     local encode4HtmlValue = XQFunction.encode4HtmlValue
     local router_name = XQSysUtil.getRouterName()
     local router_local = XQSysUtil.getRouterLocale()
+    router_name = encode4HtmlValue(router_name) .."(".. encode4HtmlValue(router_local) ..")"
     local netmod = XQFunction.getNetModeType()
     local hardware = string.lower( XQSysUtil.getHardware() )
     local color = XQSysUtil.getColor()
@@ -86,10 +87,10 @@
             <div class="internet">
             <%if vendorInfo_ip ~= 0 then%>
                 <a href="//<%=vendorInfo_ip%>" target="_blank">
-                <img src="//<%=vendorInfo_ip%><%=resource%>/web/img/icons/<%=vendorInfoRouterSrc%>">
+                <img src="<%=resource%>/web/img/icons/<%=vendorInfoRouterSrc%>">
                 </a>
             <%else%>
-                <img src="//<%=vendorInfo_ip%><%=resource%>/web/img/icons/router_other.png">
+                <img src="<%=resource%>/web/img/icons/router_other.png">
             <%end%>
                 <p><%:主路由器%></p>
                 <div class="status status-internet" id="statusInternet">

@@ -5,15 +5,6 @@ local XQBackup = require("xiaoqiang.module.XQBackup")
 local romVersion = XQSysUtil.getRomVersion()
 local uploadUrl = luci.dispatcher.build_url("api", "xqsystem","upload_rom")
 local backupKeys = XQBackup.defaultKeys()
-local XQFunction = require("xiaoqiang.common.XQFunction")
-local netmod = 0
-local netmod = XQFunction.getNetModeType()
---2 有线中继
---1 无线中继
---4 mesh主设备  whc_cap
---3 mesh从设备  whc_re
---0 router
-local isMesh = (netmod == 3 or netmod == 4) and 'true'  or  'false'
 %>
 
 <script type="tmpl/text" id="uploadform">
@@ -111,15 +102,13 @@ local isMesh = (netmod == 3 or netmod == 4) and 'true'  or  'false'
     <img src="<%=resource%>/web/img/ico_warn.png?v=<%=ver%>">
     <p ><%:恢复出厂设置操作会抹掉当前路由器的所有设置，建议您先进行配置备份再恢复出厂设置。%></p>
     <div class="btns">
-    <%if netmod == 0 then%>
         <a href="#" id="toconfigbackup" class="btn btn-primary"><span><%:备份路由器设置%></span></a>
-        <%end%>
         <a href="#" id="toresetwindow" class="btn btn-primary"><span><%:直接恢复出厂设置%></span></a>
     </div>
 </div>
 </script>
 <script type="tmpl/text" id="tpltimezone">
-<div class="dialog-timezone" id="timezone_dummy">
+<div class="dialog-timezone">
     <div class="clearfix">
         <div class="form-item-select">
             <label class="k"></label>
@@ -692,10 +681,7 @@ $.sub( 'config:upload', function(){
             return false;
         }
         var val = image.val();
-        var ext = val.substring( val.lastIndexOf( '.' ) + 1 )
-        var ext1 = val.substring( val.lastIndexOf( '\\' ) + 1 );
-
-        $("#text").html(ext1);
+        var ext = val.substring( val.lastIndexOf( '.' ) + 1 );
         ext = $.trim( ext );
         var validExt = ext == 'gz' || ext == 'GZ';
         if ( !validExt ) {
@@ -859,24 +845,7 @@ $.sub('datetime', function(){
             "NZ": "<%:新西兰%>",
             "KR": "<%:韩国%>",
             "PT": "<%:葡萄牙%>",
-            "KE": "<%:肯尼亚%>",
-            "MX": "<%:墨西哥%>",
-            "JP": "<%:日本%>",
-            "BG": "<%:保加利亚%>",
-            "CO": "<%:哥伦比亚%>",
-            "CZ": "<%:捷克%>",
-            "EE": "<%:爱沙尼亚%>",
-            "GR": "<%:希腊%>",
-            "HR": "<%:克罗地亚%>",
-            "HU": "<%:匈牙利%>",
-            "JO": "<%:约旦%>",
-            "KH": "<%:柬埔寨%>",
-            "LT": "<%:立陶宛%>",
-            "LV": "<%:拉脱维亚%>",
-            "MT": "<%:马耳他%>",
-            "RO": "<%:罗马尼亚%>",
-            "SK": "<%:斯洛伐克%>",
-            "LA": "<%:老挝%>"
+            "KE": "<%:肯尼亚%>"
         };
 
         $.getJSON('<%=luci.dispatcher.build_url("api","xqsystem","get_location")%>', function(rsp){
@@ -952,7 +921,7 @@ $.sub('datetime', function(){
         $('#btnTimezone').click(function(e){
             e.preventDefault();
             dlgTimezone = $.dialog({
-                width: 490,
+                width: 390,
                 title: '<%:更改时区%>',
                 content: $('#tpltimezone').html(),
                 lock: true
@@ -969,7 +938,7 @@ $.sub('datetime', function(){
         $('#btnDatetime').click(function(e){
             e.preventDefault();
             dlgDatetime = $.dialog({
-                width: 530,
+                width: 430,
                 title: '<%:更改时间%>',
                 content: $('#tpldatetime').html(),
                 lock: true

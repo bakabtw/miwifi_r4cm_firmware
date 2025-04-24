@@ -96,29 +96,6 @@ setup_switch()
 	    ;;
     esac
 
-    local internet_tag=$(uci -q get mi_iptv.settings.internet_tag)
-    local internet_vid=$(uci -q get mi_iptv.settings.internet_vid)
-    local miptv="mclose"
-
-    if [ "$internet_tag" == "1" ]; then
-         local rmode=$(uci -q get xiaoqiang.common.NETMODE)
-         if [ "$rmode" = "lanapmode" -o "$rmode" = "wifiapmode" -o "$rmode" = "whc_re" ]; then
-             miptv="mclose"
-         else
-             if [ "x$internet_vid" != "x" ]; then
-                 if [ $internet_vid -le 1 -o $internet_vid -gt 4094 ]; then
-                     miptv="mclose"
-                 else
-                     miptv="mopen"
-                 fi
-             fi
-         fi
-    fi
-
-    if [ "$miptv" == "mopen" ]; then
-        /etc/init.d/mi_iptv iptv_switch_on
-    fi
-
     # enforce negotiate, make dhcp client send re-lease request.
     mii_mgr -s -p 0 -r 0 -v 3300
     mii_mgr -s -p 1 -r 0 -v 3300

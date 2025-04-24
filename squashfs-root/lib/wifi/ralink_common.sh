@@ -12,17 +12,15 @@ sync_uci_with_dat() {
 	fi
 
 	case "$CountryCode" in
-	# 比利时|德国|丹麦|西班牙|芬兰|法国|爱尔兰|意大利|荷兰|波兰|瑞典|葡萄牙|罗马尼亚|保加利亚|匈牙利|马耳他|斯洛伐克|拉脱维亚|爱沙尼亚|克罗地亚|立陶宛|希腊|捷克
-		BE | DE | DK | ES | FI | FR | IE | IT | NL | PL | SE | PT | RO | BG | HU | MT | SK | LV | EE | HR | LT | GR | CZ )
+	# 比利时|德国|丹麦|西班牙|芬兰|法国|爱尔兰|意大利|荷兰|波兰|瑞典|葡萄牙
+		BE | DE | DK | ES | FI | FR | IE | IT | NL | PL | SE | PT )
 			CountryCode="EU"
 			uci set wireless.$device.ed_chk=1
 			;;
-		#欧盟|瑞士|挪威|乌克兰|英国|俄罗斯
-		EU | CH | NO | UA | GB | RU )
+		#欧盟|瑞士|挪威|乌克兰|英国
+		EU | CH | NO | UA | GB )
 			uci set wireless.$device.ed_chk=1
 			;;
-		#墨西哥|巴西|智利|秘鲁|新加坡|马来西亚|澳大利亚|新西兰|泰国|越南|韩国|印尼|约旦|哥伦比亚|肯尼亚|尼日利亚|阿联酋|老挝|柬埔寨|埃及|摩洛哥|土耳其|以色列|others
-		#MX | BR | CL | PE | SG | MY | AU | NZ | TH | VN | KR | ID | JO | CO | KE | NG | AE | LA | KH | EG | MA | TR | IL | * )
 		* )
 			uci set wireless.$device.ed_chk=0
 			;;
@@ -406,7 +404,7 @@ EOF
 	if [ "$device" = "mt7628" ]; then
 		cat <<EOF
 config wifi-iface 'miwifi_ready'
-        option disabled '1'
+        option disabled '0'
         option device 'mt7628'
         option ifname 'wl2'
         option network  'ready'

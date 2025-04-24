@@ -72,7 +72,7 @@ local macdefault = string.upper(xqlanwanutil.getDefaultMacAddress())
                                     <div class="form-item">
                                         <label class="k"><%:MTU%></label>
                                         <span class="v">
-                                            <input type="text" id="mtu" name="mtu" class="ipt-text" value="1480" autocomplete="off" reqMsg="<%:MTU%>" datatype="n" minValue="576" maxValue="1492">
+                                            <input type="text" name="mtu" class="ipt-text" value="1480" autocomplete="off" reqMsg="<%:MTU%>" datatype="n" minValue="576" maxValue="1492">
                                         </span>
                                         <em class="t"><%:字节（网络正常情况下不建议修改）%></em>
                                     </div>
@@ -446,15 +446,9 @@ local macdefault = string.upper(xqlanwanutil.getDefaultMacAddress())
             $( 'input[name="pppoePwd"]' ).val( rsp.info.details.password );
             // mtu
             var mtuval = rsp.info.mtu;
-            if(rsp.info.internet_tag == 1) {
-                if ( mtuval != '1476' ) {
-                   isauto = false;
-                } 
-            } else {
-                if ( mtuval != '1480' ) {
-                   isauto = false;
-                } 
-            } 
+            if ( mtuval != '1480' ) {
+                isauto = false;
+            }
             $('input[name=mtu]').val( mtuval );
             var service = rsp.info.details.service;
             if ( service != '' ) {
@@ -512,13 +506,6 @@ local macdefault = string.upper(xqlanwanutil.getDefaultMacAddress())
             wantype;
         $.getJSON( requestURL, requestData, function( rsp ) {
             if( rsp.code === 0 ){
-                if(rsp.info.internet_tag == 1){//为1, 带vlanid, 最大为1488，否则则为1492
-                    $('#mtu').attr('maxValue','1488')
-                    $('#mtu').val('1476') 
-                }else{
-                    $('#mtu').attr('maxValue','1492')
-                    $('#mtu').val('1480') 
-                }
                 if( rsp.status === 0 ){
                     return;
                 }
