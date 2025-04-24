@@ -19,6 +19,8 @@ DECIMAL                            HEXADECIMAL                        DESCRIPTIO
                                                                       size: 262144, image size: 8556406 bytes, 
                                                                       created: 2020-02-18 07:14:23
 
+```
+
 # Getting rootfs
 ```bash
 dd if=miwifi_r4cm_firmware_82790_3.0.16_INT.bin of=rootfs.sqfs bs=1 skip=1508004
